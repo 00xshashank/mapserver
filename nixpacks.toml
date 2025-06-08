@@ -1,5 +1,5 @@
 [phases.setup]
-aptPkgs = [ "...", "docker.io", "docker-compose", "python-distutils" ]
+aptPkgs = [ "...", "docker.io", "docker-compose-plugin"]
 
 [phases.build]
 cmds = [
