@@ -2,18 +2,21 @@ import { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
+import { backendUrl } from './config';
+
 function Route({ onDataReceived }) {
     const [ startField, setStartField ] = useState("");
     const [ destField, setDestField ] = useState("");
     const handleStartChange = (event) => { setStartField(event.target.value); }
     const handleDestChange = (event) => { setDestField(event.target.value); }
 
-    async function handleClick() { 
-        const response = await fetch('/api/maps/route', {
+    async function handleClick() {
+        const response = await fetch(`${ backendUrl }/maps/route`, {
             method: "POST",
             body: JSON.stringify({
                 "place1" : startField,
-                "place2" : destField
+                "place2" : destField,
+                "bidirectional": "True"
             }),
             headers: {
                 "Content-type": "application/json"

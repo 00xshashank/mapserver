@@ -234,11 +234,11 @@ def route_between(
     src_lon: float,
     tgt_lat: float,
     tgt_lon: float,
-    bidirectional: bool = True,
+    graph: nx.DiGraph,
+    bidirectional: bool = "True",
     weight: str = 'length',
     data_dir: str = "./data/",
 ):
-    graph = load_pickled_graph(data_dir)
 
     print(f"\n=== FINDING NEAREST NODES ===")
     try:
@@ -258,7 +258,7 @@ def route_between(
     print(f"\n=== ROUTING ===")
     print(f"Routing from node {src_node} to node {tgt_node}...")
 
-    if bidirectional:
+    if bidirectional == "True":
         node_path, distance = dijkstra_bidirectional(
             graph, src_node, tgt_node,
             weight=weight
