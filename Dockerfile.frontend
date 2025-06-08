@@ -1,15 +1,17 @@
-FROM cgr.dev/chainguard/node:20:latest-dev AS build
+FROM chainguard/node:latest
 
 WORKDIR /app
+
+USER root
+
 COPY frontend/package*.json ./
 RUN npm ci
-
 COPY frontend/ ./
 RUN npm run build
 
-FROM cgr.dev/chainguard/nginx:latest
-
-COPY --from=build /app/build /usr/share/nginx/html
-
+RUN npm install -g serve@14
 EXPOSE 3000
-CMD ["nginx", "-g", "daemon off;"]
+
+USER node
+
+CMD ["./node_modules/serve/build/main.js", "./dist"]

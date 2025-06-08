@@ -16,7 +16,7 @@ def get_coordinates():
     address = data.get("address")
     return get_coords(address)
 
-@app.route('/maps/route/bidirectional', methods=['POST'])
+@app.route('/maps/route', methods=['POST'])
 def find_route():
     data = request.get_json()
     place1 = data.get("place1")
@@ -36,4 +36,4 @@ def find_route():
     return jsonify(route), 200
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
