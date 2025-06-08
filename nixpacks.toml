@@ -1,0 +1,10 @@
+[phases.setup]
+aptPkgs = [ "...", "docker.io", "docker-compose" ]
+
+[phases.build]
+cmds = [
+  "docker-compose build --parallel"
+]
+
+[start]
+cmd = "docker-compose up --build --remove-orphans"
