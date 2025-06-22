@@ -1,2 +1,2 @@
-export const backendUrl = "http://localhost:5000/";
+export const backendUrl = "https://518c-171-76-87-240.ngrok-free.app";
 

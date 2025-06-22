@@ -1,9 +1,9 @@
 [phases.setup]
-aptPkgs = [ "...", "docker.io", "docker-compose-v2"]
+aptPkgs = [ "...", "docker.io", "docker-compose"]
 
 [phases.build]
 cmds = [
-  "docker-compose build --parallel"
+  "docker compose build --parallel"
 ]
 
 [start]

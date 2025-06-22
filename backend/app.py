@@ -5,6 +5,7 @@ from flask_cors import CORS
 import pickle
 import gzip
 from pathlib import Path
+from junction import get_intermediate_junctions
 
 load_dotenv()
 
@@ -33,16 +34,14 @@ graph = load_graph('./data/')
 
 @app.route('/maps/place', methods=['POST'])
 def get_coordinates():
-    data = request.get_json()
-    address = data.get("address")
-    return get_coords(address)
+    place1 = request.args.get("place1")
+    return get_coords(place1)
 
-@app.route('/maps/route', methods=['POST'])
+@app.route('/maps/route', methods=['GET'])
 def find_route():
-    data = request.get_json()
-    place1 = data.get("place1")
-    place2 = data.get("place2")
-    bi = data.get("bidirectional")
+    from urllib.parse import unquote
+    place1 = unquote(request.args["start"])
+    place2  = unquote(request.args["dest"])
     coords1 = get_coords(place1)
     coords2 = get_coords(place2)
     print(f"Coordinates for place 1: {coords1}")
@@ -52,10 +51,16 @@ def find_route():
         src_lon=coords1[1],
         tgt_lat=coords2[0],
         tgt_lon=coords2[1],
-        bidirectional = bi,
         graph = graph
     )
     return jsonify(route), 200
+
+@app.route('/split')
+def split():
+    place1 = request.args.get("place1")
+    place2 = request.args.get("place2")
+    coords = get_intermediate_junctions(place1, place2)
+    return coords
 
 if __name__ == "__main__":
     app.run(debug=False)
